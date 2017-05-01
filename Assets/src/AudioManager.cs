@@ -25,14 +25,15 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public static void PlaySoundEvent(string eventKey)
+    public static AudioSource PlaySoundEvent(string eventKey)
     {
-        if (instance == null) return;
-        instance.PlayEvent(eventKey);
+        if (instance == null) return null;
+        return instance.PlayEvent(eventKey);
     }
 
-    void PlayEvent(string eventKey)
+    AudioSource PlayEvent(string eventKey)
     {
+      AudioSource resultSource = null;
         bool eventFound = false;
         foreach (AudioEvent ae in audioEvents)
         {
@@ -51,6 +52,7 @@ public class AudioManager : MonoBehaviour {
                         source.pitch = ae.pitch + UnityEngine.Random.Range(-ae.pitchModulation, ae.pitchModulation);
                         source.Play();
                         foundSource = true;
+                        resultSource = source;
                         break;
                     }
 
@@ -80,9 +82,8 @@ public class AudioManager : MonoBehaviour {
         else {
           Debug.Log(String.Format("CUED {0}", eventKey));
         }
-
+        return resultSource;
     }
-
 
     [System.Serializable]
     public class AudioEvent

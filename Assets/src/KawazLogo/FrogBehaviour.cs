@@ -6,8 +6,8 @@ public class FrogBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		float rate1 = EaseFunctions.EaseIn(0.95, 1.0, 1, Music.MusicalTime, 3.0f, false, false);
-		float rate2 = EaseFunctions.EaseIn(0.0, 29, 2, Music.MusicalTime-2.75f, 1.0f, false, false);
+		float rate1 = EaseFunctions.EaseIn(1.0, 1.2, 1, Music.MusicalTime, 3.0f, false, false);
+		float rate2 = EaseFunctions.EaseIn(0.0, 28.8, 2, Music.MusicalTime-2.75f, 1.0f, false, false);
 		float opacity1 = EaseFunctions.Linear(0.0, 1.0, Music.MusicalTime, 2.5f, false, false);
 		float opacity2 = EaseFunctions.EaseIn(0.0, -1.0, 2, Music.MusicalTime - 3.0f, 1.0f, false, false);
 		float rate = rate1 + rate2;

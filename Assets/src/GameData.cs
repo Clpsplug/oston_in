@@ -9,10 +9,6 @@ public enum GameState {
 		COUNT // enumの個数
 }
 
-public struct RoomSettings {
-	float friction;
-}
-
 /// <summary>
 /// Distance Based Message
 /// 距離に応じたメッセージ
@@ -32,6 +28,8 @@ public static class GameData{
 
 	public static int cameraRange = 200; // +-何センチまでカメラにプレーヤーを写すか
 
+	public static int gravityConstant = 125; // いわゆる物理のg
+
 	static GameData() {
 		state = GameState.WAIT;
 		playerPower = 0;
@@ -42,14 +40,14 @@ public static class GameData{
 	/// コメントを設定したあと、距離値が現在の距離値を超えている/等しければストップ
 	/// </summary>
 	public static DBM[] messages = {
-		new DBM(0, "NO INPUT"),
-		new DBM(380,"TOO NEAR"),
-		new DBM(390, "GREAT"),
-		new DBM(400, "EXCELLENT"),
-		new DBM(430, "GREAT"),
-		new DBM(575, "TOO FAR"),
-		new DBM(649, "FAIL"), // どこまでいってんの から
-		new DBM(800, "R.I.P") // 永眠 (窓をぶち破るパターンのみ)
+		new DBM(0, "入力が取れませんでした"),
+		new DBM(380,"失敗 (近すぎ)"),
+		new DBM(390, "微妙"),
+		new DBM(400, "成功"),
+		new DBM(430, "微妙"),
+		new DBM(575, "失敗(遠すぎ)"),
+		new DBM(750, "アホ"), // どこまでいってんの から
+		new DBM(800, "永眠") // 永眠 (窓をぶち破るパターンのみ)
 	};
 
 	/// <summary>
@@ -61,20 +59,20 @@ public static class GameData{
 	/// 100なら50のcommentsに設定したところで3番目の200の距離値が現在の距離値を超えるので、２番目になる
 	/// </comments>
 	public static DBM[] comments = {
-		new DBM(0, "I couldn't get any input. Maybe check if your device is compatible with this game?"), // 入力が取れませんでした
-		new DBM(1, "Don't fear - the futon is very far away."), // ビビらなくても大丈夫
-		new DBM(100, "Too little momentum. Think about friction."), // このゲームでは摩擦も計算されてるからね
-		new DBM(340, "You need more power."), // まあ頭が入ったからいいんじゃね
-		new DBM(380, "Try not to suffocate. Seriously."), // 窒息するなよ
-		new DBM(390, "A little too near, but not a bad shot."), // 惜しい
-		new DBM(400, "JUST OSTON-IN! Have a good dream!"), // ジャストオストンイン！おやすみなさい！良い夢を！
-		new DBM(410, "A little too far, but not a bad shot."), // 惜しい
-		new DBM(430, "Covering skill: B-."), // ちょっとお腹が冷えそう
-		new DBM(500, "No, you just went straight through the futon."), // いや布団通り越してるからね
-		new DBM(575, "I think you're in too high spirit to sleep just yet."), // まだ寝なくてもいいぐらい元気
-		new DBM(649, "OK, where do you think you're going?"), // どこまでいってんの
-		new DBM(750, "Enjoy your headache from the wall of the room."), // 壁に頭をぶつけました
-		new DBM(899, "You crashed out of the room through the window glass.") // 窓をぶち破ってしまいました
+		new DBM(0, "別の操作方法を試してみてください"), // 入力が取れませんでした
+		new DBM(1, "まだまだ距離があります"), // ビビらなくても大丈夫
+		new DBM(200, "勢い不足です"), // このゲームでは摩擦も計算されてるからね
+		new DBM(320, "床で寝てください"), // まあ頭が入ったからいいんじゃね
+		new DBM(360, "モガッ"), // 窒息するなよ
+		new DBM(390, "惜しい！"), // 惜しい
+		new DBM(400, "ｼﾞｬｽﾄｵｽﾄﾝｲﾝ! おやすみなさい！良い夢を！"), // ジャストオストンイン！おやすみなさい！良い夢を！
+		new DBM(410, "惜しい！"), // 惜しい
+		new DBM(430, "ちょっとお腹が冷えそう"), // ちょっとお腹が冷えそう
+		new DBM(500, "勢いをつけすぎました"), // いや布団通り越してるからね
+		new DBM(575, "まだ寝なくてもいいぐらい元気"), // まだ寝なくてもいいぐらい元気
+		new DBM(649, "どこまで行ってんのーーーー"), // どこまでいってんの
+		new DBM(800, "壁に頭をぶつけました"), // 壁に頭をぶつけました
+		new DBM(899, "窓をぶち破ってしまいました") // 窓をぶち破ってしまいました
 	};
 
 	public static DBM[] resultsndkey = {
@@ -95,10 +93,5 @@ public static class GameData{
 	/// プレーヤーの脚力 (ランダムもしくはタップで決まる)
 	/// </summary>
 	public static float playerPower {get; set;}
-
-	public static RoomSettings roomEnv {
-		set {roomEnv = value;}
-		get {return roomEnv;}
-	}
 
 }
